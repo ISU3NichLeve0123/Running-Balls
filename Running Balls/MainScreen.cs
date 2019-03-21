@@ -23,7 +23,8 @@ namespace Running_Balls
             f.Controls.Remove(this);
             gameScreen Sc = new gameScreen();
             f.Controls.Add(Sc);
-            Sc.Focus(); 
+            Sc.Focus();
+            this.Dispose();
         }
         private void helpButton_Click(object sender, EventArgs e)
         {
@@ -32,6 +33,17 @@ namespace Running_Balls
             helpScreen Sc = new helpScreen();
             f.Controls.Add(Sc);
             Sc.Focus();
+            this.Dispose();
+        }
+
+        private void MainScreen_Load(object sender, EventArgs e)
+        {
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+        }
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

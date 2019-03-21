@@ -47,20 +47,20 @@ namespace Running_Balls
                 Y += speedY;
             }
         }
-        public bool Collsion(Witch MC, Saint MC2, UserControl uc)
+        public bool Collsion(Witch MC, Saint MC2,int height, int width)
         {
             Rectangle rec1 = new Rectangle(MC.X, MC.Y, MC.size, MC.size);
             Rectangle rec2 = new Rectangle(MC2.X, MC2.Y, MC2.size, MC2.size);
            //Witch Collsion
-            if (MC.Y < 0)
+            if (MC.Y <= 0)
             { 
                 MC.Y += 4;
-            }
-            if (MC.Y >= 428)
+            }         
+            if (MC.Y >= height - 26)
             {
                 MC.Y -= 4;
             }
-            if (MC.X > 775)
+            if (MC.X >= width - 26)
             {
                 MC.X -= 4;
             }
@@ -69,15 +69,15 @@ namespace Running_Balls
                 MC.X += 4;
             }
             //Saint Collsion
-            if (MC2.Y < 0)
+            if (MC2.Y <= 0)
             {
                 MC2.Y += 4;
             }
-            if (MC2.Y >= 428)
+            if (MC2.Y >= height - 26)
             {
                 MC2.Y -= 4;
             }
-            if (MC2.X > 775)
+            if (MC2.X >= width - 26)
             {
                 MC2.X -= 4;
             }

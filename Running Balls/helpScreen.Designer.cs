@@ -38,7 +38,7 @@
             this.helpLabel.ForeColor = System.Drawing.Color.DarkRed;
             this.helpLabel.Location = new System.Drawing.Point(121, 37);
             this.helpLabel.Name = "helpLabel";
-            this.helpLabel.Size = new System.Drawing.Size(493, 80);
+            this.helpLabel.Size = new System.Drawing.Size(574, 190);
             this.helpLabel.TabIndex = 0;
             this.helpLabel.Text = "label1";
             // 
@@ -47,7 +47,7 @@
             this.mainMenuButton.AccessibleRole = System.Windows.Forms.AccessibleRole.OutlineButton;
             this.mainMenuButton.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.mainMenuButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainMenuButton.Location = new System.Drawing.Point(298, 152);
+            this.mainMenuButton.Location = new System.Drawing.Point(283, 272);
             this.mainMenuButton.Name = "mainMenuButton";
             this.mainMenuButton.Size = new System.Drawing.Size(103, 39);
             this.mainMenuButton.TabIndex = 2;
@@ -64,6 +64,7 @@
             this.Controls.Add(this.helpLabel);
             this.Name = "helpScreen";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.helpScreen_Load);
             this.ResumeLayout(false);
 
         }

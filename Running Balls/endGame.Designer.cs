@@ -54,7 +54,7 @@
             this.mainMenuButton.TabIndex = 1;
             this.mainMenuButton.Text = "Main Menu";
             this.mainMenuButton.UseVisualStyleBackColor = false;
-            this.mainMenuButton.Click += new System.EventHandler(this.button1_Click);
+            this.mainMenuButton.Click += new System.EventHandler(this.mainMenuButton_Click);
             // 
             // timerLabel
             // 
@@ -75,6 +75,7 @@
             this.Controls.Add(this.endScreenLabel);
             this.Name = "EndGame";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.EndGame_Load);
             this.ResumeLayout(false);
 
         }

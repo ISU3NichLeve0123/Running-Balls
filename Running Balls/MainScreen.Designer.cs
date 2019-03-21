@@ -31,6 +31,7 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.playButton = new System.Windows.Forms.Button();
             this.helpButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -69,17 +70,31 @@
             this.helpButton.UseVisualStyleBackColor = true;
             this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
+            // exitButton
+            // 
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.ForeColor = System.Drawing.Color.Green;
+            this.exitButton.Location = new System.Drawing.Point(288, 247);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(154, 44);
+            this.exitButton.TabIndex = 3;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Gold;
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.helpButton);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.titleLabel);
             this.Name = "MainScreen";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.MainScreen_Load);
             this.ResumeLayout(false);
 
         }
@@ -89,5 +104,6 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button helpButton;
+        private System.Windows.Forms.Button exitButton;
     }
 }

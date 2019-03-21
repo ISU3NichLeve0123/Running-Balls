@@ -1,4 +1,5 @@
-﻿using System;
+﻿// March 22, 2019 Nicholas Levesque. A simple game Program demonstarting the uses of Class based objects
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Media;
 namespace Running_Balls
 {
     public partial class gameScreen : UserControl
@@ -22,15 +23,20 @@ namespace Running_Balls
         List<Witch> witchList = new List<Witch>();
         List<Saint> saintList = new List<Saint>();
         List<Ball> ballList = new List<Ball>();
-        //Movement Keys/Any Kind of Bool Variable Used
-        public bool leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, aLetterDown, sLetterDown, dLetterDown, wLetterDown,
+        //Movement Keys
+        bool leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, aLetterDown, sLetterDown, dLetterDown, wLetterDown,
         cLetterDown, bLetterDown;
-        bool shoot = false, invicblity = false;
-        // public static bool invicblity = invicblity2;    
+        //Bool Variables used in ablitys
+        bool shoot = false, invicblity = false, notDraw = false;  
         //Drawing Variables
         SolidBrush witchBrush = new SolidBrush(Color.Crimson);
         SolidBrush saintBrush = new SolidBrush(Color.Aqua);
         SolidBrush ballBrush = new SolidBrush(Color.Black);
+        SolidBrush fontBrush = new SolidBrush(Color.Purple);
+        Font drawFont = new Font("Times New Roman", 30, FontStyle.Regular);
+        //SoundPlayers
+        SoundPlayer diedSoundPlayer = new SoundPlayer(Properties.Resources.diedSound);
+        SoundPlayer survivedSoundPlayer = new SoundPlayer(Properties.Resources.survivedSound);
         //Witch Variables
         static int witchX = 408, witchY = 144, witchSize = 30, witchSpeed = 4;
         //Saint Variables
@@ -41,6 +47,12 @@ namespace Running_Balls
         Witch MC = new Witch(witchX, witchY, witchSize, witchSpeed, witchSpeed);
         Saint MC2 = new Saint(saintX, saintY, saintSize, saintSpeed, saintSpeed);
         Ball ball1 = new Ball(witchX, witchY, ballSize, ballSpeed, ballSpeed);
+        //Centering the Screen
+        private void gameScreen_Load(object sender, EventArgs e)
+        {
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+        }
         public gameScreen()
         {
             InitializeComponent();
@@ -52,22 +64,21 @@ namespace Running_Balls
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
-        { 
-
-            label1.Text = Convert.ToString(Form1.stopWatch.Elapsed.Seconds);
-            label2.Text = Convert.ToString(MC.X);
-
-            if (Form1.stopWatch.Elapsed.Seconds == Form1.stopTimeTimer || (MC2.Collsion(MC, MC2, this) == true))
+        { //Win Condtion for Saint
+            if (Form1.stopWatch.Elapsed.Seconds == Form1.stopTimeTimer)
             {
                 gameTimer.Stop();
+                survivedSoundPlayer.Play();              
                 Form1.stopWatch.Stop();
                 Form f = this.FindForm();
                 f.Controls.Remove(this);
                 EndGame Sc = new EndGame();
                 f.Controls.Add(Sc);
-            }          
-            if((ball1.Collsion(MC, MC2, this, ball1) == true))
+            }
+            //Win Condtion for Witch
+            if ((MC2.Collsion(MC, MC2, this.Height, this.Width) == true)|| (ball1.Collsion(MC, MC2, this, ball1) == true))
             {
+                diedSoundPlayer.Play();
                 gameTimer.Stop();
                 Form1.stopWatch.Stop();
                 Form f = this.FindForm();
@@ -94,7 +105,8 @@ namespace Running_Balls
                 {
                     MC.Move("down");
                 }
-                bif (bLetterDown == true && ablityTimerWitch ==0 && ablityUsedWitch < 4)
+                //Abilities and anything to do with them
+                if (bLetterDown == true && ablityTimerWitch ==0 && ablityUsedWitch < 4)
                 {
                     if(ablityUsedWitch != 4)
                     {
@@ -111,13 +123,17 @@ namespace Running_Balls
                 }
                 if(ablityTimerWitch >= 200)
                     {
-                        ablityTimerWitch = 0;
-                        shoot = false;
+                    ablityTimerWitch = 0;
+                    shoot = false;
                     bLetterDown = false;
                     }
                 if (shoot == false)
                 {
                     ball1.WitchPostion(MC.X, MC.Y);
+                }
+                if(ablityUsedWitch == 4)
+                {
+                    notDraw = true;
                 }
             }
             //Moving Saint
@@ -139,7 +155,8 @@ namespace Running_Balls
                 {
                     MC2.Move("down");
                 }
-                if(cLetterDown == true && !(ablityUsedSaint == 4))
+                //Abilities and anything to do with them
+                if (cLetterDown == true && !(ablityUsedSaint == 4))
                 {
                     ablityUsedSaint++;
                     invicblity = true;                  
@@ -157,10 +174,11 @@ namespace Running_Balls
                     ablityTimerSaint = 0;
                     MC2.Invincible(invicblity);
                     invicblityInt = 0;
-                }
+                }               
             }         
             Refresh();
         }
+        //Key Press Down
         private void gameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
@@ -197,7 +215,7 @@ namespace Running_Balls
                     break;
             }
         }
-
+        //Key Press Up
         private void gameScreen_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -231,23 +249,32 @@ namespace Running_Balls
                     break;                  
             }
         }
-
+        //Paint  Method
         private void gameScreen_Paint(object sender, PaintEventArgs e)
         {
+            //Drawing time
+            e.Graphics.DrawString(Convert.ToString(Form1.stopWatch.Elapsed.Seconds), drawFont, fontBrush, this.Width - 30, 0);
+            //Drawing Witch
             foreach (Witch MC in witchList)
             {               
                 e.Graphics.FillRectangle(witchBrush, MC.X, MC.Y, MC.size, MC.size);
             }
+            //Drawing Saint
             foreach (Saint MC2 in saintList)
             {
                 e.Graphics.FillRectangle(saintBrush, MC2.X, MC2.Y, MC2.size, MC2.size);
             }
-            if(bLetterDown == true || ablityTimerWitch >= 200 && !(ablityTimerWitch == 0) && ablityUsedWitch <4)
+            //Ensuring ball is draw at proper time
+            if(bLetterDown == true || ablityTimerWitch >= 200 && !(ablityTimerWitch == 0))
             {                       
-                foreach (Ball ball1 in ballList)
-                {                 
-                    e.Graphics.FillEllipse(ballBrush, ball1.X, ball1.Y, ball1.size, ball1.size);
-                }
+                //Does not draw when Limit reached
+                if(notDraw == false)
+                {
+                    foreach (Ball ball1 in ballList)
+                    {
+                        e.Graphics.FillEllipse(ballBrush, ball1.X, ball1.Y, ball1.size, ball1.size);
+                    }
+                }              
             }          
         }
         
