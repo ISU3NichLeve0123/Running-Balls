@@ -56,11 +56,11 @@ namespace Running_Balls
             { 
                 MC.Y += 4;
             }         
-            if (MC.Y >= height - 26)
+            if (MC.Y >= height - MC.size)
             {
                 MC.Y -= 4;
             }
-            if (MC.X >= width - 26)
+            if (MC.X >= width - MC.size)
             {
                 MC.X -= 4;
             }
@@ -73,11 +73,11 @@ namespace Running_Balls
             {
                 MC2.Y += 4;
             }
-            if (MC2.Y >= height - 26)
+            if (MC2.Y >= height - MC2.size)
             {
                 MC2.Y -= 4;
             }
-            if (MC2.X >= width - 26)
+            if (MC2.X >= width - MC2.size)
             {
                 MC2.X -= 4;
             }

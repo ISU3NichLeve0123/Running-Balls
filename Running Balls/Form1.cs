@@ -16,7 +16,7 @@ namespace Running_Balls
         public static string endGame = "The Saint Killed the Witch!";
         public static Stopwatch  stopWatch = new Stopwatch();
         public static int timer = 0;
-        public static int stopTimeTimer = 60;
+        public static int stopTimeTimer = 1000;
         public bool no;
         public Form1()
         {

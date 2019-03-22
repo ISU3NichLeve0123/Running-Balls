@@ -125,5 +125,35 @@
   <ItemGroup>
     <None Include="Resources\Ovation-Mike_Koenig-1061486511.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Saint.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Saint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Witch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dark_Matter_Tears.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Big Bomb-SoundBible.com-1219802495.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Large Fireball-SoundBible.com-301502490.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Power-Up-KP-1879176533.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\www_google_com-search %281%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\joan-of-arc-9354756-1-402.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

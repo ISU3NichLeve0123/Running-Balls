@@ -1,4 +1,4 @@
-﻿// March 22, 2019 Nicholas Levesque. A simple game Program demonstarting the uses of Class based objects
+﻿// March 22, 2019 Nicholas Levesque. A simple game Program demonstarting the uses of Class based objects(Try to comment it out, still did not work)
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,20 +29,23 @@ namespace Running_Balls
         //Bool Variables used in ablitys
         bool shoot = false, invicblity = false, notDraw = false;  
         //Drawing Variables
-        SolidBrush witchBrush = new SolidBrush(Color.Crimson);
-        SolidBrush saintBrush = new SolidBrush(Color.Aqua);
         SolidBrush ballBrush = new SolidBrush(Color.Black);
         SolidBrush fontBrush = new SolidBrush(Color.Purple);
         Font drawFont = new Font("Times New Roman", 30, FontStyle.Regular);
         //SoundPlayers
+        //Normal Collsion
         SoundPlayer diedSoundPlayer = new SoundPlayer(Properties.Resources.diedSound);
         SoundPlayer survivedSoundPlayer = new SoundPlayer(Properties.Resources.survivedSound);
+        SoundPlayer shootSoundPlayer = new SoundPlayer(Properties.Resources.ballShotSound);
+        SoundPlayer invincblitySoundPlayer = new SoundPlayer(Properties.Resources.invcblitySound);
+        //Hit via Ball
+        SoundPlayer saintHitSoundPlayer = new SoundPlayer(Properties.Resources.saintHitSound);
         //Witch Variables
-        static int witchX = 408, witchY = 144, witchSize = 30, witchSpeed = 4;
+        static int witchX = 100, witchY = 0, witchSize = 60, witchSpeed = 4;
         //Saint Variables
-        static int saintX = 408, saintY = 244, saintSize = 30, saintSpeed = 4;
+        static int saintX = 500, saintY = 400, saintSize = 60, saintSpeed = 4;
         //Ball Variables
-        static int ballSize = 10, ballSpeed = 8;
+        static int ballSize = 30, ballSpeed = 8;
         //Creating the objects to add to the list
         Witch MC = new Witch(witchX, witchY, witchSize, witchSpeed, witchSpeed);
         Saint MC2 = new Saint(saintX, saintY, saintSize, saintSpeed, saintSpeed);
@@ -65,10 +68,10 @@ namespace Running_Balls
 
         private void gameTimer_Tick(object sender, EventArgs e)
         { //Win Condtion for Saint
-            if (Form1.stopWatch.Elapsed.Seconds == Form1.stopTimeTimer)
+            if (Form1.stopWatch.Elapsed.Seconds >= Form1.stopTimeTimer)
             {
                 gameTimer.Stop();
-                survivedSoundPlayer.Play();              
+                survivedSoundPlayer.Play();
                 Form1.stopWatch.Stop();
                 Form f = this.FindForm();
                 f.Controls.Remove(this);
@@ -76,11 +79,21 @@ namespace Running_Balls
                 f.Controls.Add(Sc);
             }
             //Win Condtion for Witch
-            if ((MC2.Collsion(MC, MC2, this.Height, this.Width) == true)|| (ball1.Collsion(MC, MC2, this, ball1) == true))
-            {
-                diedSoundPlayer.Play();
+            if ((MC2.Collsion(MC, MC2, this.Height, this.Width) == true))
+            {              
                 gameTimer.Stop();
                 Form1.stopWatch.Stop();
+                diedSoundPlayer.Play(); 
+                Form f = this.FindForm();
+                f.Controls.Remove(this);
+                EndGame Sc = new EndGame();
+                f.Controls.Add(Sc);
+            }
+            if((ball1.Collsion(MC, MC2, this, ball1) == true))
+            {
+                saintHitSoundPlayer.Play();
+                gameTimer.Stop();
+                Form1.stopWatch.Stop();                  
                 Form f = this.FindForm();
                 f.Controls.Remove(this);
                 EndGame Sc = new EndGame();
@@ -108,7 +121,8 @@ namespace Running_Balls
                 //Abilities and anything to do with them
                 if (bLetterDown == true && ablityTimerWitch ==0 && ablityUsedWitch < 4)
                 {
-                    if(ablityUsedWitch != 4)
+                    shootSoundPlayer.Play();
+                    if (ablityUsedWitch != 4)
                     {
                         ablityUsedWitch++;
                     }
@@ -158,8 +172,9 @@ namespace Running_Balls
                 //Abilities and anything to do with them
                 if (cLetterDown == true && !(ablityUsedSaint == 4))
                 {
+                    invincblitySoundPlayer.Play();
                     ablityUsedSaint++;
-                    invicblity = true;                  
+                    invicblity = true;                   
                     MC2.Invincible(invicblity);
                 }
                 if (invicblity == true)
@@ -253,16 +268,16 @@ namespace Running_Balls
         private void gameScreen_Paint(object sender, PaintEventArgs e)
         {
             //Drawing time
-            e.Graphics.DrawString(Convert.ToString(Form1.stopWatch.Elapsed.Seconds), drawFont, fontBrush, this.Width - 30, 0);
+            e.Graphics.DrawString(Convert.ToString(Form1.stopWatch.Elapsed.Seconds), drawFont, fontBrush, this.Width - 50, 0);
             //Drawing Witch
             foreach (Witch MC in witchList)
             {               
-                e.Graphics.FillRectangle(witchBrush, MC.X, MC.Y, MC.size, MC.size);
+                e.Graphics.DrawImage(Properties.Resources.Witch, MC.X, MC.Y, MC.size, MC.size);
             }
             //Drawing Saint
             foreach (Saint MC2 in saintList)
             {
-                e.Graphics.FillRectangle(saintBrush, MC2.X, MC2.Y, MC2.size, MC2.size);
+                e.Graphics.DrawImage(Properties.Resources.Saint, MC2.X, MC2.Y, MC2.size, MC2.size);
             }
             //Ensuring ball is draw at proper time
             if(bLetterDown == true || ablityTimerWitch >= 200 && !(ablityTimerWitch == 0))
@@ -272,7 +287,7 @@ namespace Running_Balls
                 {
                     foreach (Ball ball1 in ballList)
                     {
-                        e.Graphics.FillEllipse(ballBrush, ball1.X, ball1.Y, ball1.size, ball1.size);
+                        e.Graphics.DrawImage(Properties.Resources.Witch_Ball, ball1.X + MC.size / 2, ball1.Y, ball1.size, ball1.size);
                     }
                 }              
             }          

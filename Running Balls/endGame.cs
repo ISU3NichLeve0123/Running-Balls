@@ -26,7 +26,7 @@ namespace Running_Balls
             if (Form1.stopWatch.Elapsed.Seconds == Form1.stopTimeTimer)
             {
                 endScreenLabel.Text = "The Saint Escaped the witch!";
-                timerLabel.Text = "You lasted " + Convert.ToString(Form1.stopWatch.Elapsed.Seconds) + " Seconds";
+                timerLabel.Text = "You escaped!";
             }
         }
         //Centers Screen

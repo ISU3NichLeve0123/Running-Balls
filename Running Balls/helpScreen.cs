@@ -15,9 +15,10 @@ namespace Running_Balls
         public helpScreen()
         {
             InitializeComponent();
-            helpLabel.Text = "For The Saint, it is the right joystick and press the blue button next to it for invincblity, " +
-            "For the Witch, it is the left joystick and press the blue button next to it to shoot a black ball. " +
-            "The objective of this game is for the Saint to outlast the Witch, by any means necessary. Also, you ONLY HAVE 3 CHARGES ON YOUR ABLITYS, use them well.";
+            helpLabel.Text = "For The Saint, it is the right joystick and press the blue button next to it for invincblity. " +
+            "For the Witch, it is the left joystick, press the blue button next to it to shoot a black ball. " +
+            "The objective of this game is for the Witch to catch the Saint, you have 30 seconds until the Saint will escape. " +
+            "You ONLY HAVE 3 CHARGES ON YOUR ABLITYS, use them well.";
         }
 
         private void mainMenuButton_Click(object sender, EventArgs e)

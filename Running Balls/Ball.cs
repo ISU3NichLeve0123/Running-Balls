@@ -37,7 +37,6 @@ namespace Running_Balls
         }
         public bool Collsion(Witch MC, Saint MC2,UserControl uc, Ball ball1)
         {
-            Rectangle rec1 = new Rectangle(MC.X, MC.Y, MC.size, MC.size);
             Rectangle rec2 = new Rectangle(MC2.X, MC2.Y, MC2.size, MC2.size);
             Rectangle rec3 = new Rectangle(ball1.X, ball1.Y, ball1.size, ball1.size);
             if (rec3.IntersectsWith(rec2) && invicblity == false)
